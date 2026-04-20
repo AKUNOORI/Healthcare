@@ -1,0 +1,750 @@
+{
+  "datasets": [
+    {
+      "name": "ccf23aa8",
+      "displayName": "Active Class",
+      "queryLines": [
+        "SELECT ClassID \r\n",
+        "FROM classroomsetup \r\n",
+        "WHERE ClassEndDateTime > current_timestamp() and ClassActiveStatus = 'Y'"
+      ],
+      "catalog": "healthcarenew",
+      "schema": "silver"
+    },
+    {
+      "name": "9b536811",
+      "displayName": "Active Students based on class",
+      "queryLines": [
+        "SELECT sp.*, cs.ClassID\r\n",
+        "FROM studentprofile sp\r\n",
+        "JOIN classstudent cs \r\n",
+        "  ON sp.StudentProfileID = cs.StudentProfileID\r\n",
+        "WHERE cs.ClassID = :parameter"
+      ],
+      "parameters": [
+        {
+          "displayName": "ClassID",
+          "keyword": "parameter",
+          "dataType": "INTEGER",
+          "defaultSelection": {
+            "values": {
+              "dataType": "INTEGER",
+              "values": [
+                {
+                  "value": "214"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "catalog": "healthcarenew",
+      "schema": "silver"
+    },
+    {
+      "name": "1ad04a54",
+      "displayName": "activeclassbystudents",
+      "config": {
+        "version": "1.1",
+        "source": "healthcarenew.gold.activeclassbystudents",
+        "dimensions": [
+          {
+            "name": "StudentProfileID",
+            "expr": "source.StudentProfileID",
+            "displayName": "Student Profile ID"
+          },
+          {
+            "name": "ClassID",
+            "expr": "source.ClassID",
+            "displayName": "Class ID"
+          },
+          {
+            "name": "UserName",
+            "expr": "source.UserName",
+            "displayName": "User Name"
+          },
+          {
+            "name": "FirstName",
+            "expr": "source.FirstName",
+            "displayName": "First Name"
+          },
+          {
+            "name": "LastName",
+            "expr": "source.LastName",
+            "displayName": "Last Name"
+          },
+          {
+            "name": "iPadNumber",
+            "expr": "source.iPadNumber",
+            "displayName": "I Pad Number"
+          },
+          {
+            "name": "BlockChatStatus",
+            "expr": "source.BlockChatStatus",
+            "displayName": "Block Chat Status"
+          },
+          {
+            "name": "BlockGameStatus",
+            "expr": "source.BlockGameStatus",
+            "displayName": "Block Game Status"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    {
+      "name": "9e08286f",
+      "displayName": "activeclasscount",
+      "config": {
+        "version": "1.1",
+        "source": "healthcarenew.gold.activeclasscount",
+        "dimensions": [
+          {
+            "name": "classid",
+            "expr": "source.classid",
+            "displayName": "Classid"
+          },
+          {
+            "name": "classCount",
+            "expr": "source.classCount",
+            "displayName": "Class Count"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    {
+      "name": "747fe9ad",
+      "displayName": "activeclasscountbasedonclass",
+      "config": {
+        "version": "1.1",
+        "source": "healthcarenew.gold.activeclasscountbasedonclass",
+        "dimensions": [
+          {
+            "name": "classid",
+            "expr": "source.classid",
+            "displayName": "Classid"
+          },
+          {
+            "name": "classCount",
+            "expr": "source.classCount",
+            "displayName": "Class Count"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    }
+  ],
+  "pages": [
+    {
+      "name": "ef19225a",
+      "displayName": "Untitled page",
+      "layout": [
+        {
+          "widget": {
+            "name": "026cfe32",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "9b536811",
+                  "fields": [
+                    {
+                      "name": "Profile_id",
+                      "expression": "`Profile_id`"
+                    },
+                    {
+                      "name": "FirstName",
+                      "expression": "`FirstName`"
+                    },
+                    {
+                      "name": "LastName",
+                      "expression": "`LastName`"
+                    },
+                    {
+                      "name": "EmailAddress",
+                      "expression": "`EmailAddress`"
+                    },
+                    {
+                      "name": "UserName",
+                      "expression": "`UserName`"
+                    },
+                    {
+                      "name": "Age",
+                      "expression": "`Age`"
+                    },
+                    {
+                      "name": "Gender",
+                      "expression": "`Gender`"
+                    },
+                    {
+                      "name": "AvatarID",
+                      "expression": "`AvatarID`"
+                    },
+                    {
+                      "name": "FavoriteString",
+                      "expression": "`FavoriteString`"
+                    },
+                    {
+                      "name": "ChatID",
+                      "expression": "`ChatID`"
+                    },
+                    {
+                      "name": "SessionID",
+                      "expression": "`SessionID`"
+                    },
+                    {
+                      "name": "CreationDate",
+                      "expression": "`CreationDate`"
+                    },
+                    {
+                      "name": "LastUpdateDate",
+                      "expression": "`LastUpdateDate`"
+                    },
+                    {
+                      "name": "StudentProfileID",
+                      "expression": "`StudentProfileID`"
+                    },
+                    {
+                      "name": "SelfieImage",
+                      "expression": "`SelfieImage`"
+                    },
+                    {
+                      "name": "LoggedInStatus",
+                      "expression": "`LoggedInStatus`"
+                    },
+                    {
+                      "name": "TotalCoins",
+                      "expression": "`TotalCoins`"
+                    },
+                    {
+                      "name": "processed_at",
+                      "expression": "`processed_at`"
+                    },
+                    {
+                      "name": "ClassID",
+                      "expression": "`ClassID`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "Profile_id"
+                  },
+                  {
+                    "fieldName": "FirstName"
+                  },
+                  {
+                    "fieldName": "LastName"
+                  },
+                  {
+                    "fieldName": "EmailAddress"
+                  },
+                  {
+                    "fieldName": "UserName"
+                  },
+                  {
+                    "fieldName": "Age"
+                  },
+                  {
+                    "fieldName": "Gender"
+                  },
+                  {
+                    "fieldName": "AvatarID"
+                  },
+                  {
+                    "fieldName": "FavoriteString"
+                  },
+                  {
+                    "fieldName": "ChatID"
+                  },
+                  {
+                    "fieldName": "SessionID"
+                  },
+                  {
+                    "fieldName": "CreationDate"
+                  },
+                  {
+                    "fieldName": "LastUpdateDate"
+                  },
+                  {
+                    "fieldName": "StudentProfileID"
+                  },
+                  {
+                    "fieldName": "SelfieImage"
+                  },
+                  {
+                    "fieldName": "LoggedInStatus"
+                  },
+                  {
+                    "fieldName": "TotalCoins"
+                  },
+                  {
+                    "fieldName": "processed_at"
+                  },
+                  {
+                    "fieldName": "ClassID"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 12,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "bf778b7c",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "1ad04a54",
+                  "fields": [
+                    {
+                      "name": "StudentProfileID",
+                      "expression": "`StudentProfileID`"
+                    },
+                    {
+                      "name": "ClassID",
+                      "expression": "`ClassID`"
+                    },
+                    {
+                      "name": "UserName",
+                      "expression": "`UserName`"
+                    },
+                    {
+                      "name": "FirstName",
+                      "expression": "`FirstName`"
+                    },
+                    {
+                      "name": "LastName",
+                      "expression": "`LastName`"
+                    },
+                    {
+                      "name": "iPadNumber",
+                      "expression": "`iPadNumber`"
+                    },
+                    {
+                      "name": "BlockChatStatus",
+                      "expression": "`BlockChatStatus`"
+                    },
+                    {
+                      "name": "BlockGameStatus",
+                      "expression": "`BlockGameStatus`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "StudentProfileID"
+                  },
+                  {
+                    "fieldName": "ClassID"
+                  },
+                  {
+                    "fieldName": "UserName"
+                  },
+                  {
+                    "fieldName": "FirstName"
+                  },
+                  {
+                    "fieldName": "LastName"
+                  },
+                  {
+                    "fieldName": "iPadNumber"
+                  },
+                  {
+                    "fieldName": "BlockChatStatus",
+                    "useForSearch": false,
+                    "contentAlignment": "left",
+                    "style": {
+                      "type": "basic",
+                      "rules": [
+                        {
+                          "condition": {
+                            "operand": {
+                              "type": "data-value",
+                              "value": "Yes"
+                            },
+                            "operator": "="
+                          },
+                          "backgroundColor": {
+                            "themeColorType": "visualizationColors",
+                            "position": 3
+                          }
+                        },
+                        {
+                          "condition": {
+                            "operand": {
+                              "type": "data-value",
+                              "value": "No"
+                            },
+                            "operator": "="
+                          },
+                          "backgroundColor": {
+                            "themeColorType": "visualizationColors",
+                            "position": 4
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "fieldName": "BlockGameStatus",
+                    "style": {
+                      "type": "basic",
+                      "rules": [
+                        {
+                          "condition": {
+                            "operand": {
+                              "type": "data-value",
+                              "value": "Yes"
+                            },
+                            "operator": "="
+                          },
+                          "backgroundColor": {
+                            "themeColorType": "visualizationColors",
+                            "position": 3
+                          }
+                        },
+                        {
+                          "condition": {
+                            "operand": {
+                              "type": "data-value",
+                              "value": "No"
+                            },
+                            "operator": "="
+                          },
+                          "backgroundColor": {
+                            "themeColorType": "visualizationColors",
+                            "position": 4
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 7,
+            "width": 12,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "active-class-student-count",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "9e08286f",
+                  "fields": [
+                    {
+                      "name": "sum(classCount)",
+                      "expression": "SUM(`classCount`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Total Students"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(classCount)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 4,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "1357923b",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "747fe9ad",
+                  "fields": [
+                    {
+                      "name": "sum(classCount)",
+                      "expression": "SUM(`classCount`)"
+                    },
+                    {
+                      "name": "classid",
+                      "expression": "`classid`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Total Students"
+              },
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "classid",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(classCount)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "label": {
+                  "show": true,
+                  "text": {
+                    "fieldName": "sum(classCount)"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 12,
+            "width": 12,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "32b94aed",
+      "displayName": "Global Filters",
+      "layout": [
+        {
+          "widget": {
+            "name": "activeclassid",
+            "queries": [
+              {
+                "name": "dashboards/01f13c8a2b161ec5914eecb8229663a5/datasets/01f13c8a35df1c0aaf28fd51555cec9b_ClassID",
+                "query": {
+                  "datasetName": "ccf23aa8",
+                  "fields": [
+                    {
+                      "name": "ClassID",
+                      "expression": "`ClassID`"
+                    },
+                    {
+                      "name": "ClassID_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "dashboards/01f13c8a2b161ec5914eecb8229663a5/datasets/01f13ca57e52181e92d4f515f66da883_ClassID",
+                "query": {
+                  "datasetName": "1ad04a54",
+                  "fields": [
+                    {
+                      "name": "ClassID",
+                      "expression": "`ClassID`"
+                    },
+                    {
+                      "name": "ClassID_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "dashboards/01f13c8a2b161ec5914eecb8229663a5/datasets/01f13cacb94a1bd08c625a333f82f469_classid",
+                "query": {
+                  "datasetName": "9e08286f",
+                  "fields": [
+                    {
+                      "name": "classid",
+                      "expression": "`classid`"
+                    },
+                    {
+                      "name": "classid_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "parameter_dashboards/01f13c8a2b161ec5914eecb8229663a5/datasets/01f13c8a78861e2ba8d4c11a2e3ce635_parameter",
+                "query": {
+                  "datasetName": "9b536811",
+                  "parameters": [
+                    {
+                      "name": "parameter",
+                      "keyword": "parameter"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "ActiveClassId"
+              },
+              "selection": {
+                "defaultSelection": {
+                  "operator": {
+                    "operator": "OR",
+                    "args": []
+                  }
+                }
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "ClassID",
+                    "queryName": "dashboards/01f13c8a2b161ec5914eecb8229663a5/datasets/01f13c8a35df1c0aaf28fd51555cec9b_ClassID"
+                  },
+                  {
+                    "parameterName": "parameter",
+                    "queryName": "parameter_dashboards/01f13c8a2b161ec5914eecb8229663a5/datasets/01f13c8a78861e2ba8d4c11a2e3ce635_parameter"
+                  },
+                  {
+                    "fieldName": "ClassID",
+                    "queryName": "dashboards/01f13c8a2b161ec5914eecb8229663a5/datasets/01f13ca57e52181e92d4f515f66da883_ClassID"
+                  },
+                  {
+                    "fieldName": "classid",
+                    "queryName": "dashboards/01f13c8a2b161ec5914eecb8229663a5/datasets/01f13cacb94a1bd08c625a333f82f469_classid"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 1,
+            "height": 2
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_GLOBAL_FILTERS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
